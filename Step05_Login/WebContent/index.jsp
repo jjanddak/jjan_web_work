@@ -34,9 +34,7 @@
 	<ul>
 		<li><a href="shop/buy.jsp?num=1&name=coffee">1번상품 구매</a></li>
 		<li><a href="shop/buy.jsp?num=2&name=sugar">2번상품 구매</a></li>
-		<li><a href="shop/buy.jsp?num=3&name=">3번상품 구매</a></li>
-		<li><a href="shop/buy.jsp?num=4&name=">4번상품 구매</a></li>
-		<li><a href="shop/buy.jsp?num=5&name=">5번상품 구매</a></li>
+		<li><a href="cafe/list.jsp">글목록 보기</a></li>
 	</ul>
 </div>
 </body>
