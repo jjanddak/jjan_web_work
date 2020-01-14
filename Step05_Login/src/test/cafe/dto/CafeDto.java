@@ -7,6 +7,8 @@ public class CafeDto {
 	private String content;
 	private int viewCount;
 	private String regdate;
+	private int startRowNum;
+	private int endRowNum;
 	
 	//디폴틋 생성자
 	public CafeDto() {}
@@ -57,6 +59,22 @@ public class CafeDto {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
 	}
 	
 	

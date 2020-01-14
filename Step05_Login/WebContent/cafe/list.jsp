@@ -8,6 +8,21 @@
 <head>
 <meta charset="UTF-8">
 <title>CAFE LIST</title>
+<style>
+	.page-display ul li{
+		float:left;
+		list-style-type:none;
+		margin-right:10px;
+	}
+	.page-display ul li a{
+		text-decoration: none;
+		color:#000;	
+	}
+	.page-display ul li.active a{
+		text-decoration: underline;
+		color: #0000ff;
+	}
+</style>
 </head>
 <body>
 <%
@@ -44,9 +59,13 @@
 		endPageNum=totalPageCount; //보정해준다. 
 	}	
 
-
+	//cafedto 객체에 로우넘들 담는다.
+	CafeDto dto=new CafeDto();
+	dto.setStartRowNum(startRowNum);
+	dto.setEndRowNum(endRowNum);
+	
 	//1. DB에서 글목록을 얻어오기
-	List<CafeDto> list=CafeDao.getInstance().getList();
+	List<CafeDto> list=CafeDao.getInstance().getList(dto);
 	//2. 글목록을 응답.
 %>
 <div class="container">
@@ -74,6 +93,21 @@
 			<%} %>
 		</tbody>
 	</table>
+	<div class="page-display">
+		<ul>
+			<%for(int i=startPageNum;i<=endPageNum;i++){ %>
+				<%if(i==pageNum){ %>
+					<li class="active">
+						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
+					</li>				
+				<%}else { %>
+					<li>
+						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
+					</li>
+				<%} %>
+			<%} %>			
+		</ul>
+	</div>
 </div>
 </body>
 </html>
