@@ -1,0 +1,55 @@
+<%@page import="test.cafe.dao.CafeDao"%>
+<%@page import="test.cafe.dto.CafeDto"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	//1. GET 방식ㅇ 파라미터로 전달되는 글번호 읽기;
+	int num=Integer.parseInt(request.getParameter("num"));
+	//2. DB에서 글정보가져오기
+	CafeDto dto=CafeDao.getInstance().getData(num);
+	//3. 해당글의 조회수 1증가
+	CafeDao.getInstance().addViewCount(num);
+	//4. 응답
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>글제목 : <%=dto.getTitle() %></title>
+<style>
+	.contents{
+		width: 100%;
+		border: 1px dotted #cecece;
+	}
+</style>
+</head>
+<body>
+<div class="contianer">
+	<h1>글 자세히</h1>
+	<table>
+		<tr>
+			<th>글번호</th>
+			<td><%=dto.getNum() %></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td><%=dto.getWriter() %></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><%=dto.getTitle() %></td>
+		</tr>
+		<tr>
+			<th>조회수</th>
+			<td><%=dto.getViewCount() %></td>
+		</tr>
+		<tr>
+			<th>등록일</th>
+			<td><%=dto.getRegdate() %></td>
+		</tr>
+	</table>
+	<div class="contents"><%=dto.getContent() %></div>
+	<a href="list.jsp">목록으로</a>
+</div>
+</body>
+</html>
