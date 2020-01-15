@@ -78,6 +78,75 @@ public class CafeDao {
 		return list;
 	}
 	
+	//글하나의 정보를 리턴하는 메소드
+	public CafeDto getData(int num) {
+		CafeDto dto=null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "SELECT writer,title,content,viewCount, regdate"
+					+ " from board_cafe"
+					+ " where num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				dto=new CafeDto();
+				dto.setNum(num);
+				dto.setWriter(rs.getString("writer"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setViewCount(rs.getInt("viewCount"));
+				dto.setRegdate(rs.getString("regdate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				//connection pool 에 반납하기 
+				//.close() 메소드를 호출하면 자동 반납된다.
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {}
+		}		
+		return dto;
+	}
+	
+	//조회수를 증가시키는 메소드
+	public boolean addViewCount(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag=0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "update board_cafe"
+					+ " set viewCount=viewCount+1"
+					+ " where num=?";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 값 바인딩 하기
+			pstmt.setInt(1, num);
+			flag=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)pstmt.close();
+				if (conn != null)conn.close();
+			} catch (Exception e) {}
+		}
+		if(flag>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	//글젅체의 개수를 리턴하는 메소드
 	public int getCount() {
 		int rowCount=0;
