@@ -10,26 +10,11 @@
 <head>
 <meta charset="UTF-8">
 <title>this is index.jjjsp</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/bootstrap.js"></script>
+<jsp:include page="include/resource.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="include/navbar.jsp"></jsp:include>
 <div class="container">
-	<%if(id==null){ %>
-		<ul>
-			<li><a href="users/signup_form.jsp">회원가입</a></li>
-			<li><a href="users/login_form.jsp">로그인</a></li>
-		</ul>		
-	<%}else{ %>
-		<p>
-			<strong>
-				<a href="${pageContext.request.contextPath }/users/private/info.jsp"><%=id %></a>
-				님 로그인 됨
-			</strong><br/>
-			<a href="users/logout.jsp">로그아웃</a>
-		</p>
-	<%} %>
 <h1>인덱스 페이지</h1>
 	<ul>
 		<li><a href="shop/buy.jsp?num=1&name=coffee">1번상품 구매</a></li>
@@ -37,5 +22,6 @@
 		<li><a href="cafe/list.jsp">글목록 보기</a></li>
 	</ul>
 </div>
+<jsp:include page="include/footer.jsp"></jsp:include>
 </body>
 </html>

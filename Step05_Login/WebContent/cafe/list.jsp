@@ -8,34 +8,18 @@
 <head>
 <meta charset="UTF-8">
 <title>CAFE LIST</title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
 <style>
-	.page-display ul li{
-		float:left;
-		list-style-type:none;
-		margin-right:10px;
-	}
-	.page-display ul li a{
-		text-decoration: none;
-		color:#000;	
-	}
-	.page-display ul li.active a{
-		text-decoration: underline;
-		color: #0000ff;
-	}
-	.page-display ul li.muted a{
-		text-decoration:underline;
-		color:orange;
-		font-weight: bold;
-	}
-	.page-display ul li.muted a{
-		color:#cecece
-	}
+
 </style>
 </head>
 <body>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="cafe" name="category"/>
+</jsp:include>
 <%
 	//한 페이지에 나타낼 row 의 갯수
-	final int PAGE_ROW_COUNT=3;
+	final int PAGE_ROW_COUNT=5;
 	//하단 디스플레이 페이지 갯수
 	final int PAGE_DISPLAY_COUNT=3;
 	
@@ -77,9 +61,17 @@
 	//2. 글목록을 응답.
 %>
 <div class="container">
-	<a href="private/insertform.jsp">새글 작성</a>
-	<h1>글 목록입니다</h1>
-	<table>
+	<ol class="breadcrumb">
+		<li><a href="list.jsp">목록</a></li>
+	</ol>
+	<table class="table table-striped table-condensed">
+		<colgroup>
+			<col class="col-xs-1"/>
+			<col class="col-xs-2"/>
+			<col class="col-xs-5"/>
+			<col class="col-xs-1"/>
+			<col class="col-xs-4"/>
+		</colgroup>
 		<thead>
 			<tr>
 				<th>글번호</th>
@@ -105,14 +97,15 @@
 			<%} %>
 		</tbody>
 	</table>
+	<a href="private/insertform.jsp">새글 작성</a>
 	<div class="page-display">
-		<ul>
+		<ul class="pagination pagination-sm">
 			<%if(startPageNum!=1){%>
 				<li>
 					<a href="list.jsp?pageNum=<%=startPageNum-1 %>">&laquo;</a>
 				</li>
 			<%} else{%>
-				<li class="muted">
+				<li class="disabled">
 					<a href="javascript:">&laquo;</a>
 				</li>
 			<%} %>
@@ -132,12 +125,13 @@
 					<a href="list.jsp?pageNum=<%=endPageNum+1 %>">&raquo;</a>
 				</li>
 			<%}else { %>
-				<li class="muted">
+				<li class="disabled">
 					<a href="javascript:">&raquo;</a>
 				</li>
 			<%} %>
 		</ul>
 	</div>
 </div>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -50,6 +50,16 @@
 	</table>
 	<div class="contents"><%=dto.getContent() %></div>
 	<a href="list.jsp">목록으로</a>
+	<%
+		//세션의 아이디를 가져옴, 만일 로그인하지 않았으면 null 이다.	
+		String id=(String)session.getAttribute("id");
+	%>
+	<%-- 글 작성자와 로그인된 아이디가 같을 때 수정링크 표시. --%>
+	<%if(dto.getWriter().equals(id)){ %>
+		<a href="private/updateform.jsp?num=<%=dto.getNum()%>">
+			수정
+		</a>		
+	<%} %>
 </div>
 </body>
 </html>
