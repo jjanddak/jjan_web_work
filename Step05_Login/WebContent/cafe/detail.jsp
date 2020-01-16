@@ -16,17 +16,30 @@
 <head>
 <meta charset="UTF-8">
 <title>글제목 : <%=dto.getTitle() %></title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
 <style>
-	.contents{
+	.contents, table{
 		width: 100%;
 		border: 1px dotted #cecece;
+		box-shadow: 3px 3px 5px 6px #ccc;
 	}
 </style>
 </head>
 <body>
-<div class="contianer">
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="cafe" name="category"></jsp:param>
+</jsp:include>
+<div class="container">
+	<ol class="breadcrumb">
+		 <li><a href="${pageContext.request.contextPath }/cafe/list.jsp">목록</a></li>
+		<li>글 상세보기</li>
+	</ol>
 	<h1>글 자세히</h1>
-	<table>
+	<table class="table table-bordered table-condensed">
+		<colgroup>
+			<col class="col-xs-3"/>
+			<col class="col-xs-9"/>
+		</colgroup>
 		<tr>
 			<th>글번호</th>
 			<td><%=dto.getNum() %></td>
