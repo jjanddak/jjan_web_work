@@ -21,6 +21,7 @@
 <head>
 <meta charset="UTF-8">
 <title>inserrt</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <div class="container">
@@ -31,7 +32,9 @@
 		</script>
 	<%}else { %>
 			<h1>저장실패!</h1>
-			<a href="insertform.jsp">다시작성하기</a>;
+		<p class="alert alert-danger">
+			<a class="alert-link" href="insertform.jsp">다시작성하기</a>;
+		</p>
 	<%} %>
 </div>
 </body>

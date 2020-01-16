@@ -20,6 +20,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <div class="container">
@@ -30,8 +31,10 @@
 		</script>
 	<%}else {%>
 		<h1>ALERT!</h1>
-		<p>글 수정 실패! </p>
-		<a href="updateform.jsp?num=<%=num%>">다시시도</a>
+		<p class="alert alert-danger">
+			 수정 실패!
+		<a class="alert-link" href="updateform.jsp?num=<%=num%>">다시시도</a>
+		</p>
 	<%} %>
 </div>
 </body>
