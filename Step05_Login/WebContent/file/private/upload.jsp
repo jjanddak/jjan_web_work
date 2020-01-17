@@ -1,3 +1,4 @@
+<%@page import="test.file.dao.FileDao"%>
 <%@page import="test.file.dto.FileDto"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
@@ -40,11 +41,11 @@
 	
 	//작업 성공여부
 	boolean isSuccess=false;
+	//파일의 정보를 담을 FileDto객체생성
+	FileDto dto=new FileDto();
 	try{
 		List<FileItem> formItems=upload.parseRequest(request);
 		if(formItems!=null && formItems.size()>0){
-			//파일의 정보를 담을 FileDto객체생성
-			FileDto dto=new FileDto();
 			
 			//반복문돌면서 전송된 아이템을 불러온다
 			for(FileItem item:formItems){
@@ -88,7 +89,7 @@
 			dto.setWriter(id);
 					
 			//DB에 파일정보 저장
-			
+			isSuccess=FileDao.getInstance().insert(dto);
 			
 		}//if()
 	}catch(Exception e){
@@ -104,6 +105,26 @@
 <title>업로딩</title>
 </head>
 <body>
-
+<div class="container">
+	<%if(isSuccess){ %>
+		<h1>Alert</h1>
+		<p class="alert alert-success">
+			<strong><%=dto.getOrgFileName() %></strong>
+			파일을 저장했습니다.
+			<a class="alert-link" href=
+			"${pageContext.request.contextPath }/file/list.jsp">
+				목록보기	
+			</a>
+		</p>	
+	<%}else{ %>
+		<p class="alert alert-danger">
+			파일 정보를 DB에 저장하다가 오류발생			
+			<a class="alert-link" href=
+			"${pageContext.request.contextPath }/file/private/upload_form.jsp">
+				다시시도
+			</a>
+		</p>
+	<%} %>
+</div>
 </body>
 </html>

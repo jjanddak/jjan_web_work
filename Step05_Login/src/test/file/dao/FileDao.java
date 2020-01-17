@@ -14,7 +14,7 @@ public class FileDao {
 	
 	private FileDao() {}
 	
-	public static FileDao getInstant() {
+	public static FileDao getInstance() {
 		if(dao==null) {
 			dao=new FileDao();
 		}
@@ -62,6 +62,42 @@ public class FileDao {
 			}
 		}
 		return list;
+	}
+	
+	public boolean insert(FileDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "INSERT into board_file"
+					+ " (num, writer, title, orgFileName, saveFileName"
+					+ ", fileSize, regdate)"
+					+ " values(board_file_seq.nextval,?,?,?,?,?,sysdate)";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 값 바인딩 하기
+			pstmt.setString(1,dto.getWriter());
+			pstmt.setString(2,dto.getTitle());
+			pstmt.setString(3,dto.getOrgFileName());
+			pstmt.setString(4,dto.getSaveFileName());
+			pstmt.setLong(5,dto.getFileSize());
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

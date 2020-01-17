@@ -7,7 +7,7 @@
 <%
 	//1. DB에서 파일목록얻기
 	List<FileDto> list=new ArrayList<>();
-	list=FileDao.getInstant().getList();
+	list=FileDao.getInstance().getList();
 	//2. 응답하기
 %>
 <!DOCTYPE html>
