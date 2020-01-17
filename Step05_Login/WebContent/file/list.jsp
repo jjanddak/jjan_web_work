@@ -23,7 +23,7 @@
 </jsp:include>
 <h1>파일목록</h1>
 <div class="container">
-	<table>
+	<table class="table table-striped table-condensedl">
 		<thead>
 			<tr>			
 				<th>번호</th>
@@ -41,7 +41,12 @@
 					<td><%=tmp.getNum() %></td>
 					<td><%=tmp.getWriter() %></td>
 					<td><%=tmp.getTitle() %></td>
-					<td><%=tmp.getOrgFileName() %></td>
+					<td>
+						<a href="${pageContext.request.contextPath }
+						/file/download.jsp?num=<%=tmp.getNum()%>">
+							<%=tmp.getOrgFileName() %>
+						</a>
+					</td>
 					<td><%=tmp.getFileSize()%></td>
 					<td><%=tmp.getDownCount()%></td>
 					<td><%=tmp.getRegdate()%></td>
