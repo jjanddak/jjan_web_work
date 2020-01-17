@@ -5,6 +5,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//세션아이디 읽기
+	String id=(String)session.getAttribute("id");
+
 	//1. DB에서 파일목록얻기
 	List<FileDto> list=new ArrayList<>();
 	list=FileDao.getInstance().getList();
@@ -50,11 +53,28 @@
 					<td><%=tmp.getFileSize()%></td>
 					<td><%=tmp.getDownCount()%></td>
 					<td><%=tmp.getRegdate()%></td>
+					<td>
+						<%if(tmp.getWriter().equals(id)){ %>
+							<a href="javascript:deleteConfirm(<%=tmp.getNum()%>)">
+								삭제
+							</a>
+						<%} %>
+					</td>
 				</tr>
 			<%} %>
 		</tbody>
 	</table>
 	<a href="${pageContext.request.contextPath }/file/private/upload_form.jsp">파일 업로드</a>
 </div>
+<script>
+	function deleteConfirm(num){
+		var isDelete=confirm(num+" 번 파일을 삭제하시겠습니까?");
+		if(isDelete){
+			location.href="private/delete.jsp?num="+num;
+		}else{
+			
+		}
+	}
+</script>
 </body>
 </html>

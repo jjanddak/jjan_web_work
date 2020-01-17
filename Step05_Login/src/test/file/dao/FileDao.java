@@ -175,4 +175,32 @@ public class FileDao {
 		return dto;
 	}
 	
+	//파일정보 삭제하는 메소드
+	public boolean delete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag=0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "delete from board_file"
+					+ " where num=?";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 값 바인딩 하기
+			pstmt.setInt(1, num);
+			flag=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)pstmt.close();
+				if (conn != null)conn.close();
+			} catch (Exception e) {}
+		}
+		if(flag>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }
