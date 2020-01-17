@@ -49,6 +49,7 @@
 			<%} %>
 		</tbody>
 	</table>
+	<a href="${pageContext.request.contextPath }/file/private/upload_form.jsp">파일 업로드</a>
 </div>
 </body>
 </html>
