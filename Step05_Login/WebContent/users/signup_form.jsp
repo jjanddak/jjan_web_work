@@ -270,9 +270,6 @@
 	});	
 	
 	
-	//가입버튼 비활성화
-	$("#submitBtn")
-	.prop("disabled",true);
 	
 	//폼에 제ㅍ출이벤트가 발생했을 때 실행
 	$("#signupForm").on("submit",function(){
@@ -304,6 +301,12 @@
 			return false;
 		}
 	});
+	
+	//가입버튼 비활성화
+	$("#submitBtn")
+	.prop("disabled",false);
+	
+	
 </script>
 </body>
 </html>

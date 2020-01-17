@@ -72,7 +72,16 @@
 		<a href="private/updateform.jsp?num=<%=dto.getNum()%>">
 			수정
 		</a>		
+		<a href="javascript:deleteConfirm();">삭제</a>
 	<%} %>
 </div>
+<script>
+	function deleteConfirm(){
+		var isDelete=confirm("글을 삭제하시겠습니까?");
+		if(isDelete){
+			location.href="private/delete.jsp?num=<%=dto.getNum()%>";
+		}
+	}
+</script>
 </body>
 </html>
