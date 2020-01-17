@@ -15,3 +15,15 @@ create table board_cafe(
 );
 
 create sequence board_cafe_seq;
+
+create table board_file(
+num number primary key,
+writer varchar2(100),
+title varchar2(100) not null,
+orgFileName varchar2(100) not null, --원본 파일명
+saveFileName varchar2(100) not null, --서버에 저장된 파일명
+fileSize number,
+downCount number default 0,
+regdate date);
+
+create sequence board_file_seq;
