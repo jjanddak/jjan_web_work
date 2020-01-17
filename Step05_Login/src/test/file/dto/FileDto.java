@@ -9,8 +9,27 @@ public class FileDto {
 	private long fileSize;
 	private int downCount;
 	private String regdate;
+	private int startRowNum;
+	private int endRowNum;
 	
 	public FileDto() {}
+	
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
 
 	public int getNum() {
 		return num;

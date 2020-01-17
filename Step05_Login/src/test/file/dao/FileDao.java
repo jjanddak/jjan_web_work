@@ -21,30 +21,36 @@ public class FileDao {
 		return dao;
 	}
 	
-	public List<FileDto> getList(){
+	public List<FileDto> getList(FileDto dto){
 		List<FileDto> list=new ArrayList<FileDto>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = new DbcpBean().getConn();
-			String sql = "SELECT num, writer, title, orgFileName"
-					+ ", fileSize, downCount, regdate"
-					+ " from board_file"
-					+ " order by num desc";
+			String sql="SELECT *"
+					+ " FROM"
+					+ " (SELECT result1.*, ROWNUM AS rnum"
+					+ " FROM"
+					+ " (SELECT num,writer,title,orgFileName,saveFileName,fileSize"
+					+ ",downCount,regdate"
+					+ " FROM board_file"
+					+ " ORDER BY num DESC) result1)"
+					+ " WHERE rnum BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString();
+			pstmt.setInt(1, dto.getStartRowNum());
+			pstmt.setInt(2, dto.getEndRowNum());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				FileDto dto=new FileDto();
-				dto.setNum(rs.getInt("num"));
-				dto.setWriter(rs.getString("writer"));
-				dto.setTitle(rs.getString("title"));
-				dto.setOrgFileName(rs.getString("orgFileName"));
-				dto.setFileSize(rs.getLong("fileSize"));
-				dto.setDownCount(rs.getInt("downCount"));
-				dto.setRegdate(rs.getString("regdate"));
-				list.add(dto);
+				FileDto tmp=new FileDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setOrgFileName(rs.getString("orgFileName"));
+				tmp.setFileSize(rs.getLong("fileSize"));
+				tmp.setDownCount(rs.getInt("downCount"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -201,6 +207,39 @@ public class FileDao {
 		}else {
 			return false;
 		}
+	}
+	
+	//글젅체의 개수를 리턴하는 메소드
+	public int getCount() {
+		int rowCount=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "SELECT max(num) as count"
+					+ " from board_file";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				rowCount=rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				//connection pool 에 반납하기 
+				//.close() 메소드를 호출하면 자동 반납된다.
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return rowCount;
 	}
 	
 }
