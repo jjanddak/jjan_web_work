@@ -3,15 +3,19 @@
 <%
 	//폼ㄴ전송 ㅍㅏ라미터
 	String id=request.getParameter("id");
+	String pwd=request.getParameter("pwd");
 	//checkbox를 체크했는지 (체크안하면 null)
 	String isSave=request.getParameter("isSave");
 	if(isSave!=null){
 		//아이디를 쿠키로 저장
-		Cookie cook=new Cookie("savedId",id);
+		Cookie idCook=new Cookie("savedId",id);
+		Cookie pwdCook=new Cookie("savedPwd",pwd);
 		//테스트이므로 60초만 유지되도록.
-		cook.setMaxAge(60);
+		idCook.setMaxAge(60);
+		pwdCook.setMaxAge(60);
 		//응답객체(HttpServletResponse)를 이용해 쿠키도응답
-		response.addCookie(cook);
+		response.addCookie(idCook);
+		response.addCookie(pwdCook);
 	}
 %>
 <!DOCTYPE html>

@@ -27,6 +27,25 @@
 		//로그인 되었다는 의미에서 session에 "id"라는 키값으로 저장
 		session.setAttribute("id",id);
 	}
+	
+	
+	//checkbox를 체크했는지 (체크안하면 null)
+	String isSave=request.getParameter("isSave");
+	//아이디를 쿠키로 저장
+	Cookie idCook=new Cookie("savedId",id);
+	Cookie pwdCook=new Cookie("savedPwd",pwd);
+	if(isSave!=null){
+		//테스트이므로 60초만 유지되도록.
+		idCook.setMaxAge(60*60*24);
+		pwdCook.setMaxAge(60*60*24);
+	}else{
+		//테스트이므로 60초만 유지되도록.
+		idCook.setMaxAge(0);
+		pwdCook.setMaxAge(0);
+	}
+	//응답객체(HttpServletResponse)를 이용해 쿠키도응답
+	response.addCookie(idCook);
+	response.addCookie(pwdCook);
 %>
 <!DOCTYPE html>
 <html>

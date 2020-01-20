@@ -60,6 +60,23 @@
 		//로그인 성공후에 index.jsp 페이지로 보낼수 있도록 구성한다. 
 		url=request.getContextPath()+"/index.jsp";
 	}
+	
+	//쿠키읽어오기
+	Cookie[] cookies=request.getCookies();
+
+	//저장된 아이디 담기
+	String savedId="";//빈문자열을 초기값으로.
+	String savedPwd="";//빈문자열을 초기값으로.
+	
+	if(cookies!=null){
+		for(Cookie tmp:cookies){
+			if(tmp.getName().equals("savedId")){
+				savedId=tmp.getValue();
+			}else if(tmp.getName().equals("savedPwd")){
+				savedPwd=tmp.getValue();
+			}
+		}
+	}
 %>
 <div class="container">
 	<form class="form-signin" action="login.jsp" method="post">
@@ -67,12 +84,12 @@
 		<input type="hidden" name="url" value="<%=url %>" />
 		<h2 class="form-signin-heading">로그인 정보 입력</h2>
 		<label for="id" class="sr-only">아이디</label>
-		<input type="text" id="id" name="id" class="form-control" placeholder="아이디"/>
+		<input type="text" id="id" name="id" value="<%=savedId %>" class="form-control" placeholder="아이디"/>
 		<label for="pwd" class="sr-only">비밀번호</label>
-		<input type="password" id="pwd" name="pwd" class="form-control" placeholder="비밀번호">
+		<input type="password" id="pwd" name="pwd" value="<%=savedPwd %>" class="form-control" placeholder="비밀번호">
 		<div class="checkbox">
 			<label>
-				<input type="checkbox"/>아이디, 비밀번호 저장
+				<input type="checkbox" name="isSave" value="yes" checked>아이디, 비밀번호 저장
 			</label>
 		</div>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
