@@ -41,7 +41,7 @@
 			<td>
 				<a href="javascript:" id="profileLink">
 					<%if(dto.getProfile()==null){ %>
-						<img src="${pageContext.request.contextPath }/resources/images/111.jpeg" alt="" />
+						<img src="${pageContext.request.contextPath }/resources/images/default_user.jpeg" alt="" />
 					<%}else { %>
 						<img src="${pageContext.request.contextPath }<%=dto.getProfile() %>" alt="" />
 					<%} %>
@@ -66,18 +66,36 @@
 	<input type="file" name="profileImage" id="profileImage" 
 		accept=".jpg, .jpeg, .png, .JPG, .JPEG"/>
 </form>
-
-<script>
+<%-- jquery form 플러그인 javascript 로딩 --%>
+<script src="${pageContext.request.contextPath }/resources/js/jquery.form.min.js"></script>
+<script>	
+	//프로필 이미지 클릭하면
+	$("#profileLink").click(function(){
+		//강제로 <input type="file" />을 클릭한것 처럼 동작.
+		$("#profileImage").click();
+	});
+	//프로필 이미지가 선택되면
+	$("#profileImage").on("change",function(){
+		//폼을 강제 제출한다.
+		$("#profileForm").submit();
+	});
+	//jquery form 플러그인의 동작을이용해서 폼이 ajax로 제출되도록 한다.
+	$("#profileForm").ajaxForm(function(responseData){
+		//responseData는 plain object이다
+		//{savedPath:"/upload/ㅈ저ㅏㅇ된 이미지파일명"}
+		//savedPath라는 방에 저장된 이미지경로가 들어있다.
+		console.log(responseData);
+		var src="${pageContext.request.contextPath }"+responseData.savedPath;
+		//img 의 src속성에 반영함으로써 이미지가 업데이ㅡ되도록한다.
+		$("#profileLink img").attr("src",src)
+	});
+	
 	function deleteConfirm(){
 		var isDelete=confirm("<%=id%>님 탈퇴하시겠습니까?");
 		if(isDelete){
 			location.href="delete.jsp";
 		}
 	}
-	
-	$("#profileLink").click(function(){
-		$("#profileImage").click();
-	});
 </script>
 </body>
 </html>

@@ -264,6 +264,36 @@ public class UsersDao {
 		return isValid;
 	}
 	
+	//프로필 이미지 정보를 업데이트하는 메소드
+	public boolean updateProfile(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag=0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "UPDATE users"
+					+ " set profile=?"
+					+ " where id=?";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 값 바인딩 하기
+			pstmt.setString(1, dto.getProfile());
+			pstmt.setString(2, dto.getId());
+			flag=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)pstmt.close();
+				if (conn != null)conn.close();
+			} catch (Exception e) {}
+		}
+		if(flag>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	
 	public boolean insert(UsersDto dto) {
 		Connection conn = null;

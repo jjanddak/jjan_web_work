@@ -9,11 +9,12 @@ public class UsersDto {
 	//디폴트생성ㅈ
 	public UsersDto() {}
 	
-	public UsersDto(String id, String pwd, String email, String regdate) {
+	public UsersDto(String id, String pwd, String email, String regdate, String profile) {
 		this.id=id;
 		this.pwd=pwd;
 		this.email=email;
 		this.regdate=regdate;
+		this.profile=profile;
 	}
 	
 	public String getProfile() {
