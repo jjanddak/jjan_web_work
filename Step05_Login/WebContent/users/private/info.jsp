@@ -14,11 +14,12 @@
 <head>
 <meta charset="UTF-8">
 <title>YOUR INFO</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <div class="container">
 	<h1>개인정보 페이지</h1>
-	<table>
+	<table class="table table-striped table-condensed">
 		<tr>
 			<th>아이디</th>
 			<td><%=dto.getId() %></td>
@@ -32,8 +33,8 @@
 			<td><%=dto.getRegdate() %></td>
 		</tr>
 	</table>
-	<a href="updateform.jsp">개인정보 수정하기</a>
-	<a href="javascript:deleteConfirm()">회원탈퇴</a>
+	<a href="updateform.jsp"><button class="btn btn-primary">개인정보 수정하기</button></a>
+	<a href="javascript:deleteConfirm()"><button class="btn btn-danger">회원탈퇴</button></a>
 </div>
 <script>
 	function deleteConfirm(){

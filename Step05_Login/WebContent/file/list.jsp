@@ -69,7 +69,7 @@
 %>
 <h1>파일목록</h1>
 <div class="container">
-	<table class="table table-striped table-condensedl">
+	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>			
 				<th>번호</th>

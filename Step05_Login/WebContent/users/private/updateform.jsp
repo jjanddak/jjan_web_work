@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>updateformm.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <%
@@ -27,10 +28,10 @@
 			<input type="text" id="email" name="email" 
 			value="<%=dto.getEmail() %>" />
 		</div>
-		<button type="submit">수정확인</button>
-		<button type="reset">취소</button>
+		<button class="btn btn-primary" type="submit">수정확인</button>
+		<button class="btn btn-warning" type="reset">취소</button>
 	</form>
-	<a href="pwd_updateform.jsp">비밀번호 수정하기</a>
+	<a href="pwd_updateform.jsp"><button class="btn btn-info">비밀번호 수정하기</button></a>
 </div>
 </body>
 </html>
