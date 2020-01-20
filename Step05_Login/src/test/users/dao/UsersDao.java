@@ -124,7 +124,7 @@ public class UsersDao {
 		UsersDto dto = null;
 		try {
 			conn = new DbcpBean().getConn();
-			String sql = "SELECT pwd, email, regdate"
+			String sql = "SELECT pwd, email, regdate, profile"
 					+ " from users"
 					+ " where id=?";
 			pstmt = conn.prepareStatement(sql);
@@ -136,6 +136,7 @@ public class UsersDao {
 				dto.setPwd(rs.getString("pwd"));
 				dto.setEmail(rs.getString("email"));
 				dto.setRegdate(rs.getString("regdate"));
+				dto.setProfile(rs.getString("profile"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

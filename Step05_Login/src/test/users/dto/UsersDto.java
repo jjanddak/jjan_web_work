@@ -5,6 +5,7 @@ public class UsersDto {
 	private String pwd;
 	private String email;
 	private String regdate;
+	private String profile; //프로필 이미지 경로를 저장할 필드.
 	//디폴트생성ㅈ
 	public UsersDto() {}
 	
@@ -15,6 +16,14 @@ public class UsersDto {
 		this.regdate=regdate;
 	}
 	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	public String getId() {
 		return id;
 	}
