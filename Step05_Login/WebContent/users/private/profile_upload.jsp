@@ -81,14 +81,3 @@
 	}
 %>    
 {"savedPath":"<%=savedPath %>"}
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>/users/private/profile_upload.jsp</title>
-</head>
-<body>
-
-</body>
-</html>
