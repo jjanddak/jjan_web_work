@@ -27,6 +27,7 @@
 		<li><a href="popup/main.jsp">팝업테스트2</a></li>
 		<li><a href="el01">El 테스트</a></li>
 		<li><a href="el02">EL 테스트2</a></li>
+		<li><a href="el03">EL 테스트3</a></li>
 	</ul>
 </div>
 <jsp:include page="include/footer.jsp"></jsp:include>
