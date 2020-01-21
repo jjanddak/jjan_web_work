@@ -5,8 +5,10 @@
 <%
 	//1. 파라미터로 전달되는 글번호 읽기
 	int num=Integer.parseInt(request.getParameter("num"));
+	request.setAttribute("num", num);
 	//2. DBㅇ에서 글정보 얻기
 	CafeDto dto=CafeDao.getInstance().getData(num);
+	request.setAttribute("title", dto.getTitle());
 	//3. 글수정폼 응답
 %>
 <!DOCTYPE html>
@@ -27,14 +29,14 @@
 	</ol>
 	<h1>수정크리스탈페이지</h1>
 	<form action="update.jsp" method="post">
-		<input type="hidden" name="num" value="<%=num %>" />
+		<input type="hidden" name="num" value="${num }" />
 		<div class="form-group">
 			<label for="num">글번호</label>
-			<input class="form-control" type="text" id="num" value="<%=num %>" />
+			<input class="form-control" type="text" id="num" value="${num }" />
 		</div>
 		<div class="form-group">
 			<label for="title">제목</label>
-			<input class="form-control" type="text" name="title" id="title" value="<%=dto.getTitle()%>"/>
+			<input class="form-control" type="text" name="title" id="title" value="${title }"/>
 		</div>
 		<div class="form-group">
 			<label for="content">내용</label>

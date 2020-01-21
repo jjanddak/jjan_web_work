@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,7 @@
 <%
 	//로그인 회원의 아이디 읽기
 	String id=(String)session.getAttribute("id");
+	request.setAttribute("id", id);
 %>
 	<div class="container">
 		<ol class="breadcrumb">
@@ -32,7 +34,7 @@
 		<form action="insert.jsp" method="post">
 			<div class="form-group">
 				<label for="writer">작성자</label>
-				<input class="form-control" type="text" value="<%=id %>" />
+				<input class="form-control" type="text" value="${id }" />
 			</div>
 			<div class="form-group">
 				<label for="title">제목</label>

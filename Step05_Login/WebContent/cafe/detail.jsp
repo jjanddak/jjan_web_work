@@ -2,9 +2,11 @@
 <%@page import="test.cafe.dto.CafeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	//1. GET 방식ㅇ 파라미터로 전달되는 글번호 읽기;
 	int num=Integer.parseInt(request.getParameter("num"));
+	request.setAttribute("num", num);
 	//2. DB에서 글정보가져오기
 	CafeDto dto=CafeDao.getInstance().getData(num);
 	//3. 해당글의 조회수 1증가
@@ -15,7 +17,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글제목 : <%=dto.getTitle() %></title>
+<%request.setAttribute("title", dto.getTitle()); %>
+<title>글제목 : ${title}</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
 <style>
 	.contents, table{
@@ -64,16 +67,16 @@
 	<div class="contents"><%=dto.getContent() %></div>
 	<a href="list.jsp">목록으로</a>
 	<%
-		//세션의 아이디를 가져옴, 만일 로그인하지 않았으면 null 이다.	
-		String id=(String)session.getAttribute("id");
+		request.setAttribute("writer", dto.getWriter());
 	%>
 	<%-- 글 작성자와 로그인된 아이디가 같을 때 수정링크 표시. --%>
-	<%if(dto.getWriter().equals(id)){ %>
-		<a href="private/updateform.jsp?num=<%=dto.getNum()%>">
+	<c:if test="${writer eq id }">
+		<a href="private/updateform.jsp?num=${num}">
 			수정
 		</a>		
 		<a href="javascript:deleteConfirm();">삭제</a>
-	<%} %>
+	</c:if>
+
 </div>
 <script>
 	function deleteConfirm(){
