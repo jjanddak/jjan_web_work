@@ -26,7 +26,6 @@
 <p> 10 은 10 과 같아요 : <strong>${10 == 10 }</strong></p>
 <p> 10 은 10 과 같아요 : <strong>${10 eq 10 }</strong></p>
 <p> 10 은 10 과 달라요 : <strong>${10 != 10 }</strong></p>
-<p> 10 은 10 과 달라요 : <strong>${10 ne 10 }</strong></p>
 
 <h4>논리연산</h4>
 <p> true || false : ${true || false}</p>
