@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +59,11 @@
 	
 	//1. DB에서 글목록을 얻어오기
 	List<CafeDto> list=CafeDao.getInstance().getList(dto);
+	request.setAttribute("list", list);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
 	//2. 글목록을 응답.
 %>
 <div class="container">
@@ -82,53 +88,64 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%for(CafeDto tmp:list){ %>
-			<tr>
-				<td><%=tmp.getNum() %></td>
-				<td><%=tmp.getWriter() %></td>
-				<td>
-					<a href="detail.jsp?num=<%=tmp.getNum()%>">
-						<%=tmp.getTitle() %>
-					</a>
-				</td>
-				<td><%=tmp.getViewCount() %></td>
-				<td><%=tmp.getRegdate() %></td>
-			</tr>		
-			<%} %>
+			<c:forEach var="tmp" items="${list }" >
+				<tr>
+					<td>${tmp.num }</td>
+					<td>${tmp.writer }</td>
+					<td>
+						<a href="detail.jsp?num=${tmp.num }">
+							${tmp.title }
+						</a>
+					</td>
+					<td>${tmp.viewCount }</td>
+					<td>${tmp.regdate }</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<a href="private/insertform.jsp">새글 작성</a>
 	<div class="page-display">
 		<ul class="pagination pagination-sm">
-			<%if(startPageNum!=1){%>
-				<li>
-					<a href="list.jsp?pageNum=<%=startPageNum-1 %>">&laquo;</a>
-				</li>
-			<%} else{%>
-				<li class="disabled">
-					<a href="javascript:">&laquo;</a>
-				</li>
-			<%} %>
-			<%for(int i=startPageNum;i<=endPageNum;i++){ %>
-				<%if(i==pageNum){ %>
-					<li class="active">
-						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
-					</li>				
-				<%}else { %>
+			<c:choose>
+				<c:when test="${startPageNum ne 1 }">
 					<li>
-						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
+						<a href="list.jsp?pageNum=${startPageNum-1}">&laquo;</a>
 					</li>
-				<%} %>
-			<%} %>			
-			<%if(endPageNum < totalPageCount){ %>
-				<li>
-					<a href="list.jsp?pageNum=<%=endPageNum+1 %>">&raquo;</a>
-				</li>
-			<%}else { %>
-				<li class="disabled">
-					<a href="javascript:">&raquo;</a>
-				</li>
-			<%} %>
+				</c:when>
+				<c:otherwise>
+					<li class="disabled">
+						<a href="javascript:">&laquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }"
+				step="1">
+				
+				<c:choose>
+					<c:when test="${i eq pageNum }">
+						<li class="active">
+							<a href="list.jsp?pageNum=${i }">${i }</a>
+						</li>		
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="list.jsp?pageNum=${i}">${i }</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${endPageNum lt totalPageCount }">
+					<li>
+						<a href="list.jsp?pageNum=${endPageNum+1}">&raquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="disabled">
+						<a href="javascript:">&raquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</div>
 </div>
