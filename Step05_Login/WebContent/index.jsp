@@ -31,6 +31,8 @@
 		<li><a href="jstl/test01.jsp">JSTL TEst</a></li>
 		<li><a href="jstl/test02.jsp">JSTL TEST2</a></li>
 		<li><a href="jstl/test03.jsp">JSTL TEST3</a></li>
+		<li><a href="jstl/test04.jsp">JSTL TEST4..</a></li>
+		<li><a href="fortune">MVC TEST (오늘의 운세)</a></li>
 	</ul>
 </div>
 <jsp:include page="include/footer.jsp"></jsp:include>

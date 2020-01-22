@@ -9,6 +9,7 @@
 	request.setAttribute("num", num);
 	//2. DB에서 글정보가져오기
 	CafeDto dto=CafeDao.getInstance().getData(num);
+	request.setAttribute("dto", dto);
 	//3. 해당글의 조회수 1증가
 	CafeDao.getInstance().addViewCount(num);
 	//4. 응답
@@ -45,32 +46,29 @@
 		</colgroup>
 		<tr>
 			<th>글번호</th>
-			<td><%=dto.getNum() %></td>
+			<td>${dto.num}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td><%=dto.getWriter() %></td>
+			<td>${dto.writer}</td>
 		</tr>
 		<tr>
 			<th>제목</th>
-			<td><%=dto.getTitle() %></td>
+			<td>${dto.title}</td>
 		</tr>
 		<tr>
 			<th>조회수</th>
-			<td><%=dto.getViewCount() %></td>
+			<td>${dto.viewCount}</td>
 		</tr>
 		<tr>
 			<th>등록일</th>
-			<td><%=dto.getRegdate() %></td>
+			<td>${dto.regdate}</td>
 		</tr>
 	</table>
-	<div class="contents"><%=dto.getContent() %></div>
+	<div class="contents">${dto.getContent()}</div>
 	<a href="list.jsp">목록으로</a>
-	<%
-		request.setAttribute("writer", dto.getWriter());
-	%>
 	<%-- 글 작성자와 로그인된 아이디가 같을 때 수정링크 표시. --%>
-	<c:if test="${writer eq id }">
+	<c:if test="${dto.writer eq id }">
 		<a href="private/updateform.jsp?num=${num}">
 			수정
 		</a>		

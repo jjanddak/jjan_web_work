@@ -4,6 +4,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	//세션아이디 읽기
 	String id=(String)session.getAttribute("id");
@@ -65,6 +67,11 @@
 	
 	//1. DB에서 글목록을 얻어오기
 	List<FileDto> list=FileDao.getInstance().getList(dto);
+	request.setAttribute("list", list);
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
 	//2. 글목록을 응답.
 %>
 <h1>파일목록</h1>
@@ -82,63 +89,70 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%for(FileDto tmp:list){ %>
+			<c:forEach var="tmp" items="${list}">
 				<tr>
-					<td><%=tmp.getNum() %></td>
-					<td><%=tmp.getWriter() %></td>
-					<td><%=tmp.getTitle() %></td>
+					<td>${tmp.num }</td>
+					<td>${tmp.writer }</td>
+					<td>${tmp.title }</td>
 					<td>
 						<a href="${pageContext.request.contextPath }
-						/file/download.jsp?num=<%=tmp.getNum()%>">
-							<%=tmp.getOrgFileName() %>
+						/file/download.jsp?num=${tmp.num}">
+							${tmp.orgFileName }
 						</a>
 					</td>
-					<td><%=tmp.getFileSize()%></td>
-					<td><%=tmp.getDownCount()%></td>
-					<td><%=tmp.getRegdate()%></td>
+					<td><fmt:formatNumber value="${tmp.fileSize }" /> byte</td>
+					<td>${tmp.downCount }</td>
+					<td>${tmp.regdate }</td>
 					<td>
-						<%if(tmp.getWriter().equals(id)){ %>
-							<a href="javascript:deleteConfirm(<%=tmp.getNum()%>)">
-								삭제
-							</a>
-						<%} %>
+						<c:if test="${tmp.writer eq id }">
+							<a href="javascript:deleteConfirm(${tmp.num})">삭제</a>
+						</c:if>
 					</td>
 				</tr>
-			<%} %>
+			</c:forEach>
 		</tbody>
 	</table>
 	<a href="${pageContext.request.contextPath }/file/private/upload_form.jsp">파일 업로드</a>
 	<div class="page-display">
 		<ul class="pagination pagination-sm">
-			<%if(startPageNum!=1){%>
-				<li>
-					<a href="list.jsp?pageNum=<%=startPageNum-1 %>">&laquo;</a>
-				</li>
-			<%} else{%>
-				<li class="disabled">
-					<a href="javascript:">&laquo;</a>
-				</li>
-			<%} %>
-			<%for(int i=startPageNum;i<=endPageNum;i++){ %>
-				<%if(i==pageNum){ %>
-					<li class="active">
-						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
-					</li>				
-				<%}else { %>
+			<c:choose>
+				<c:when test="${startPageNum ne 1 }">
 					<li>
-						<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
+						<a href="list.jsp?pageNum=${startPageNum-1}">&laquo;</a>
 					</li>
-				<%} %>
-			<%} %>			
-			<%if(endPageNum < totalPageCount){ %>
-				<li>
-					<a href="list.jsp?pageNum=<%=endPageNum+1 %>">&raquo;</a>
-				</li>
-			<%}else { %>
-				<li class="disabled">
-					<a href="javascript:">&raquo;</a>
-				</li>
-			<%} %>
+				</c:when>
+				<c:otherwise>
+					<li class="disabled">
+						<a href="javascript:">&laquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum}">
+				<c:choose>
+					<c:when test="${i eq pageNum }">
+						<li class="active">
+							<a href="list.jsp?pageNum=${i }">${i }</a>
+						</li>						
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="list.jsp?pageNum=${i }">${i }</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${endPageNum lt totalPageCount }">
+					<li>
+						<a href="list.jsp?pageNum=${endPageNum+1}">&raquo;</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="disabled">
+						<a href="javascript:">&raquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>	
 		</ul>
 	</div>
 </div>

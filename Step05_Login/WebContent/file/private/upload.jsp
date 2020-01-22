@@ -97,6 +97,8 @@
 		response.sendError(500, e.getMessage());
 		return;
 	}
+	request.setAttribute("isSuccess", isSuccess);
+	request.setAttribute("orgFileName", dto.getOrgFileName());
 %>
 <!DOCTYPE html>
 <html>
