@@ -18,6 +18,7 @@
 	<li><a href="todo/list2.do">할일목록보기2</a></li>	
 	<li><a href="todo/list3.do">할일목록보기3</a></li>	
 	<li><a href="users/loginform.do">로그인하기</a></li>
+	<li><a href="play.do">회원 전용 공간</a></li>
 </ul>
 <p>lorem.........................................</p>
 <h2>공지사항</h2>

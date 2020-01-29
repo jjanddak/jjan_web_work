@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Handles requests for the application home page.
@@ -47,6 +49,20 @@ public class HomeController {
 		 * 
 		 */
 		return "home";
+	}
+	
+	@RequestMapping
+	public ModelAndView play(HttpSession session, 
+			ModelAndView mView) {
+		//세션에 로그인정보가 있는지 확인한다.
+		String id=(String)session.getAttribute("id");
+		if(id==null) { //로그인 안된상태
+			mView.setViewName("redirect:/users/loginform.do"); //리다이렉트			
+		}else { //로그인된상태
+			mView.setViewName("play"); //포워드
+		}
+		
+		return mView;
 	}
 	
 }
