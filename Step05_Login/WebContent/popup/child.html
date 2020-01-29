@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>child children</title>
+</head>
+<body>
+<h3>팝업된 페이지..</h3>
+<p>Lorem ipsum dolor sit amet,cursus lacus phtincidunt metus mauris, sed dictum sapien facilisis id. Phasellus a elit vitae arcu bibendum elementum et eu urna. Morbi interdum purus at mollis tincidunt. Donec pretium dui id porta commodo. Nam fermentum eu elit et venenatis. Sed elementum nibh tellus, et porttitor orci rhoncus eu.</p>
+<input type="text" id="inputAddr" /><br/>
+<a href="javascript:self.close();">닫기</a>
+<script>
+	document.querySelector("#inputAddr")
+	.addEventListener("input",function(){
+		window.opener.document.querySelector("#addr").value=
+			this.value;
+	})
+</script>
+</body>
+</html>
