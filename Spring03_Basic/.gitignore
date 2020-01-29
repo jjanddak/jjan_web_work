@@ -138,4 +138,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+*.png
+*.gif
+*.jpg
+*.jpeg
+*.js
+*.css
+*.map
 # End of https://www.gitignore.io/api/java,maven,windows,eclipse,java-web
