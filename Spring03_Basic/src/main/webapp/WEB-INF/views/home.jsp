@@ -8,7 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>home.jsp</h1>
+<h1>INDEX PAGE</h1>
+<ul>
+	<li><a href="todo/list.do">할일목록보기</a></li>
+</ul>
 <p>lorem.........................................</p>
 <h2>공지사항</h2>
 <ul>
