@@ -9,6 +9,10 @@
 </head>
 <body>
 <h1>INDEX PAGE</h1>
+<c:if test="${not empty id }">
+	<p><strong>${id }</strong>님 환영합니다.</p>
+	<a href="users/logout.do">로그아웃하기</a>
+</c:if>
 <ul>
 	<li><a href="todo/list.do">할일목록보기</a></li>	
 	<li><a href="todo/list2.do">할일목록보기2</a></li>	
