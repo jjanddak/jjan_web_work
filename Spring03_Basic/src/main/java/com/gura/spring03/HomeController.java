@@ -1,8 +1,12 @@
 package com.gura.spring03;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,22 +21,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	// /home.do 요청이 왔을 때 요청을 처리하게 하는 @RequestMapping 어노테이션
+	@RequestMapping("/home")
+	public String home(HttpServletRequest request) {
+		//모델
+		List<String> notice=new ArrayList<>();
+		notice.add("감기조심");
+		notice.add("코로나조심");
+		notice.add("에브리바디 서바이브!");
+		notice.add("lorem ipsum");
+		notice.add("문자열이 필요합니다");
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		//모델을 request에 담기.
+		request.setAttribute("notice", notice);
 		
-		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
-		
+		/*
+		 * "home"을 리턴해주면
+		 * 
+		 * "/WEB-INF/views/"+"home+".jsp" 와 같은 문자열이 만들어 지고
+		 * 
+		 *  /WEB-INF/views/home.jsp 페이지로 forward 이동 후
+		 *  
+		 *  응답된다.
+		 * 
+		 */
 		return "home";
 	}
 	
