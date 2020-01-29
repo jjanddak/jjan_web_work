@@ -33,7 +33,7 @@
 		<li><a href="jstl/test03.jsp">JSTL TEST3</a></li>
 		<li><a href="jstl/test04.jsp">JSTL TEST4..</a></li>
 		<li><a href="fortune">MVC TEST (오늘의 운세)</a></li>
-		<li><a href="cafe/list.nhn">MVC 카페 글목록 보기</a></li>
+		<li><a href="cafe/list.nhn">MVC 카페 글목록 보기</a></li>  
 	</ul>
 </div>
 <jsp:include page="include/footer.jsp"></jsp:include>
