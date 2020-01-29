@@ -14,6 +14,7 @@
 %>
 <p> myName : <strong><%=myName %></strong></p>
 <p> myName : <strong>${requestScope.myName }</strong></p>
-<p> num : <strong>${num}</strong></p> <!-- 서블릿이 jsp페이지로 포워드해서 응답을 위임했을 땐 Parameter가 전달되지 않는다..?않는것같다-->
+<p> num : <strong>${num}</strong></p> <!-- 서블릿이 jsp페이지로 포워드해서 응답을 위임했을 땐 Parameter가 
+										전달되지 않는다..?않는것같다-->
 </body>
 </html>

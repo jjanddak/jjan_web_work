@@ -21,7 +21,7 @@
 	<p>로그인을 해야합니다</p>
 </c:if>
 
-<c:if test="${sessionScope.id!=null }">
+<c:if test="${sessionScope.id ne null }">
 	<p><strong>${sessionScope.id }</strong>님 로그인됐습니다</p>
 </c:if>
 <c:if test="${not empty sessionScope.id }">
