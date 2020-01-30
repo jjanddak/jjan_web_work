@@ -39,7 +39,20 @@ public class MessengerAspect {
 		//aop가 적용된 메소드 수행하고 리턴되는 값 받아오기.(void면 null)
 		Object obj=joinPoint.proceed(); //메소드를 실행하는 부분.
 		
-		//aop가 적용된 메소드 리턴 직후
-		System.out.println("-- 리턴 직후 --");
+		//aop가 적용된 메소드 수행 직후
+		System.out.println("-- 수행 직후 --");
 	}	
+	
+	@Around("execution(String getMessage())")
+	public Object around2(ProceedingJoinPoint joinPoint) throws Throwable{
+		//aop가 적용된 메소드를 수행하고 리턴되는값 얻기
+		Object obj=joinPoint.proceed();
+		
+		//return 값 조작.
+		obj="게임 ㄱ";
+		
+		//리턴값 다시 리턴.
+		return obj;
+	}
+	
 }
