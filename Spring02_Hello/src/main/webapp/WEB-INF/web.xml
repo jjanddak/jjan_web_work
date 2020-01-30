@@ -24,7 +24,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<!-- appServlet 이라는 이름의 서블릿 매핑(어떤 형태의 요청을 처리할지)하기 --> -->
+	<!-- appServlet 이라는 이름의 서블릿 매핑(어떤 형태의 요청을 처리할지)하기 -->
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>

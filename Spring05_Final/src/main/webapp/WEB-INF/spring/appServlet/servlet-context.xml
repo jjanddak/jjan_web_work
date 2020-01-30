@@ -22,16 +22,43 @@
 		class="org.springframework.jndi.JndiObjectFactoryBean">
 		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
 	</beans:bean>
+	
+	<!-- 
+		위의 설정을 java code로 환산하면
+		
+		dataSource=new JndiObjetFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+	 -->
+	
 	<beans:bean id="sessionFactory" 
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="configLocation"
 			value="classpath:com/gura/spring05/mybatis/Configuration.xml"/>
 	</beans:bean>
+	
+	<!-- 
+		(참조값 전달할때는 ref=, 숫자나 값을 직접 전달할때는 value=)
+		위의 설정을 java code로 환산하면
+		
+		sessionFactory=new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource);
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml");
+		
+	 -->
+	
 	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg name="sqlSessionFactory" 
+		<beans:constructor-arg name="sqlSessionFactory"  
 			ref="sessionFactory"/>
 	</beans:bean>
+	<!-- 
+		(constructor-arg는 생성자에 전달되는 인자를 뜻함)
+		위의 설정을 java code로 환산하면
+
+		new SqlSessionTemplate(sessionFactory); <<dao에서 필요한 핵심의존객체.		
+		
+	 -->
+
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
