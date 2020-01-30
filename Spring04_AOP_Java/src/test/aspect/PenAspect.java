@@ -1,5 +1,6 @@
 package test.aspect;
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -17,5 +18,10 @@ public class PenAspect {
 	@Before("execution(void write*())") //(이런 모양을 갖고있는) 스프링이 관리하고있는 객체의 메소드 수행 '전'
 	public void prepare() {
 		System.out.println("Pen을 준비해요@!!!@!#!@");
+	}
+	
+	@After("execution(void write*())")
+	public void end() {
+		System.out.println("Pen 마무으리");
 	}
 }
