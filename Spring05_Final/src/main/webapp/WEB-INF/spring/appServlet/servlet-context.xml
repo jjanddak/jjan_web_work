@@ -54,7 +54,14 @@
 	<!-- 
 		(constructor-arg는 생성자에 전달되는 인자를 뜻함)
 		위의 설정을 java code로 환산하면
-
+	
+		dataSource=new JndiObjetFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+		
+		sessionFactory=new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource);
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml");
+		
 		new SqlSessionTemplate(sessionFactory); <<dao에서 필요한 핵심의존객체.		
 		
 	 -->
