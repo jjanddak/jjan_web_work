@@ -10,4 +10,9 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM member where num=#{num}
 	</delete>
+	
+	<insert id="insert" parameterType="com.gura.spring05.member.dto.MemberDto">
+		INSERT INTO member (num, name, addr) 
+		values (member_seq.nextval, #{name}, #{addr})
+	</insert>
 </mapper>
