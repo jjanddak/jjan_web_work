@@ -33,4 +33,29 @@ public class MemberDaoImpl implements MemberDao{
 		session.insert("member.insert", dto);
 		
 	}
+	
+	@Override
+	public MemberDto getData(int num) {
+		MemberDto dto=session.selectOne("member.getData",num);
+			
+		
+		return dto;
+	}
+	
+	@Override
+	public void update(MemberDto dto) {
+		session.update("member.update",dto);
+		
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+

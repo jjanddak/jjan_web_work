@@ -23,6 +23,7 @@
 				<th>번호</th>
 				<th>이름</th>
 				<th>주소</th>
+				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -32,6 +33,7 @@
 					<td>${tmp.num }</td>
 					<td>${tmp.name }</td>
 					<td>${tmp.addr }</td>
+					<td><a href="updateform.do?num=${tmp.num }">수정</a></td>
 					<td><a href="delete.do?num=${tmp.num }">삭제</a></td>
 				</tr>
 			</c:forEach>

@@ -79,8 +79,30 @@ public class MemberController {
 		return mView;
 	}
 	
+	@RequestMapping("/member/updateform")
+	public ModelAndView updateform(@RequestParam int num,
+			ModelAndView mView) {
+		
+		MemberDto dto=dao.getData(num);
+		
+		// "dto" 라는 키값으로 request 영역에 담기.
+		mView.addObject("dto",dto);
+		
+		// view page 로 forward 이동해서 수정할 회원의 정보를 출력.
+		mView.setViewName("member/updateform");
+		
+		return mView;
+	}
 	
-	
+	@RequestMapping("/member/update")
+	public ModelAndView update(@ModelAttribute("dto") MemberDto dto,
+			ModelAndView mView) {
+		
+		dao.update(dto);
+		mView.setViewName("member/update");
+		
+		return mView;
+	}
 	
 }
 

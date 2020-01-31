@@ -15,4 +15,17 @@
 		INSERT INTO member (num, name, addr) 
 		values (member_seq.nextval, #{name}, #{addr})
 	</insert>
+	
+	<select id="getData" parameterType="int" resultType="com.gura.spring05.member.dto.MemberDto">
+		SELECT num,name,addr
+		FROM member
+		WHERE num=#{num}
+	</select>
+	
+	<update id="update" parameterType="com.gura.spring05.member.dto.MemberDto">
+		UPDATE member
+		SET name=#{name}, addr=#{addr}
+		WHERE num=#{num}
+	</update>
+	
 </mapper>
