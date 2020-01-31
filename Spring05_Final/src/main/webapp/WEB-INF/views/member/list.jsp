@@ -7,14 +7,10 @@
 <meta charset="UTF-8">
 <title>회원목록!</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
-<style>
-	table{
-		border: 1px solid red;
-		border-collapse: collapse;
-	}
-	
+<style>	
 	th,td{
-		border: 1px solid red;
+		border: 1px solid black;
+		border-collapse: collapse;
 	}
 </style>
 </head>

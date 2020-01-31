@@ -24,6 +24,7 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Override
 	public void delete(int num) {
-		session.delete("member.delete",num);
+		session.delete("member.delete",num); 
+		//("mapper안의 namespace(member) . member안의 delete의 id",인자)
 	}
 }
