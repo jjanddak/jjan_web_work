@@ -48,7 +48,7 @@ public class TodoServiceImpl implements TodoService{
 	public List<TodoDto> getqList(ModelAndView mView, String query) {
 		List<TodoDto> list=dao.getqList(query);
 		mView.addObject("list",list);
-		
+		mView.addObject("query", query);
 		return list;
 	}
 	

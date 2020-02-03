@@ -18,6 +18,7 @@
 <div class="container">
 	<h1>검색결과 페이지</h1>
 	<h3>${query }에 대한 검색결과</h3>
+	<p>${list[0] }</p>
 	<table>
 		<thead>
 			<tr>

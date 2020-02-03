@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gura.spring05.users.dao.UsersDao;
+import com.gura.spring05.users.dto.UsersDto;
 
+@Service
 public class UsersServiceImpl implements UsersService{
 
 	@Autowired
@@ -19,6 +22,11 @@ public class UsersServiceImpl implements UsersService{
 		map.put("isExist", isExist);
 		
 		return map;
+	}
+
+	@Override
+	public void addUser(UsersDto dto) {
+		
 	}
 	
 }
