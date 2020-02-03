@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.member.dao.MemberDao;
 import com.gura.spring05.member.dto.MemberDto;
+import com.gura.spring05.member.service.MemberService;
 
 @Controller
 public class MemberController {
@@ -20,18 +21,35 @@ public class MemberController {
 	@Autowired
 	private MemberDao dao;	//MemberDao는 MemberDaoImpl 이기도 하므로(구현했으므로) 둘다 사용가능.
 							//하지만 의존객체를 직접 임포트하지 않기위해 인터페이스타입으로 선언.
+	//의존객체 주입받기 (DI)
+	@Autowired
+	private MemberService service;
 	
-	//회원목록 보기 요청(/member/list.do)를 처리할 컨트롤러의 메소드.
+	
 	@RequestMapping("/member/list")
 	public ModelAndView list(ModelAndView mView) {
-		//회원목록을 얻어오려면?
-		List<MemberDto> list=dao.getList();
+		//MemberServiceImpl 객체를 이용해서 비즈니스 로직 처리
+		service.getList(mView);
 		
-		mView.addObject("list",list);
+		//MemberServiceImpl 객체를 이용해서 비즈니스 로직 처리
+		service.getList(mView);
+		
+		//view page 정보를 담고
 		mView.setViewName("member/list");
 		
 		return mView;
 	}
+//	//회원목록 보기 요청(/member/list.do)를 처리할 컨트롤러의 메소드.
+//	@RequestMapping("/member/list")
+//	public ModelAndView list(ModelAndView mView) {
+//		//회원목록을 얻어오려면?
+//		List<MemberDto> list=dao.getList();
+//		
+//		mView.addObject("list",list);
+//		mView.setViewName("member/list");
+//		
+//		return mView;
+//	}
 	
 	
 	//회원정보 삭제 처리
@@ -65,7 +83,12 @@ public class MemberController {
 	public ModelAndView insert(@ModelAttribute("dto") MemberDto dto,
 			ModelAndView mView) {
 		
-		dao.insert(dto);
+//		dao.insert(dto);
+		
+		//서비스를 통해서 비즈니스 로직 처리 
+		service.addMember(dto);
+				
+				
 		/*
 		 * @ModelAttrivute("dto") MemberDto dto 의 의미
 		 * 
@@ -103,6 +126,8 @@ public class MemberController {
 		
 		return mView;
 	}
+	
+
 	
 }
 
