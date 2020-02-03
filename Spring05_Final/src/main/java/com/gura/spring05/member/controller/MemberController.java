@@ -39,24 +39,14 @@ public class MemberController {
 		
 		return mView;
 	}
-//	//회원목록 보기 요청(/member/list.do)를 처리할 컨트롤러의 메소드.
-//	@RequestMapping("/member/list")
-//	public ModelAndView list(ModelAndView mView) {
-//		//회원목록을 얻어오려면?
-//		List<MemberDto> list=dao.getList();
-//		
-//		mView.addObject("list",list);
-//		mView.setViewName("member/list");
-//		
-//		return mView;
-//	}
 	
 	
 	//회원정보 삭제 처리
 	@RequestMapping("/member/delete")
 	public String delete(@RequestParam int num) {
-		//MemberDao 객체를 이용해서 회원정보 삭제
-		dao.delete(num);
+		
+		//서비스 이용해서 회원정보 삭제
+		service.deleteMember(num);
 		
 		//리다이렉트 응답.
 		return "redirect:/member/list.do";
@@ -83,8 +73,6 @@ public class MemberController {
 	public ModelAndView insert(@ModelAttribute("dto") MemberDto dto,
 			ModelAndView mView) {
 		
-//		dao.insert(dto);
-		
 		//서비스를 통해서 비즈니스 로직 처리 
 		service.addMember(dto);
 				
@@ -96,7 +84,6 @@ public class MemberController {
 		 * 2. "dto"라는 키값으로 MemberDto 객체를 request 영역에 담는다.
 		 * 
 		 */
-		//mView.addObject("dto", dto); 
 		mView.setViewName("member/insert");
 		
 		return mView;
@@ -106,12 +93,8 @@ public class MemberController {
 	public ModelAndView updateform(@RequestParam int num,
 			ModelAndView mView) {
 		
-		MemberDto dto=dao.getData(num);
+		service.getMember(mView, num);
 		
-		// "dto" 라는 키값으로 request 영역에 담기.
-		mView.addObject("dto",dto);
-		
-		// view page 로 forward 이동해서 수정할 회원의 정보를 출력.
 		mView.setViewName("member/updateform");
 		
 		return mView;
@@ -120,8 +103,8 @@ public class MemberController {
 	@RequestMapping("/member/update")
 	public ModelAndView update(@ModelAttribute("dto") MemberDto dto,
 			ModelAndView mView) {
-		
-		dao.update(dto);
+		service.updateMember(dto);
+	
 		mView.setViewName("member/update");
 		
 		return mView;
