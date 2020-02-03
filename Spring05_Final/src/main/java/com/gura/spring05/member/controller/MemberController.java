@@ -31,9 +31,6 @@ public class MemberController {
 		//MemberServiceImpl 객체를 이용해서 비즈니스 로직 처리
 		service.getList(mView);
 		
-		//MemberServiceImpl 객체를 이용해서 비즈니스 로직 처리
-		service.getList(mView);
-		
 		//view page 정보를 담고
 		mView.setViewName("member/list");
 		
