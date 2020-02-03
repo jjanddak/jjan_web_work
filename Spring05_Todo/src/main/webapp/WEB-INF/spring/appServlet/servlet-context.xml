@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 
+		아래의 MyBatis 관련 설정은 Servers/context.xml 문서에
+		
+		<Resource name="jdbc/myoracle" auth="Container"
+		type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
+		username="scott" password="tiger" maxTotal="20" maxIdle="10"
+		maxWaitMillis="-1"/>
+		
+		위와같은 DB 접속 정보가 있어야 동작한다.
+	 -->
+	<beans:bean id="dataSource" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
+	</beans:bean>
+	
+	<!-- 
+		위의 설정을 java code로 환산하면
+		
+		dataSource=new JndiObjetFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+	 -->
+	
+	<beans:bean id="sessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="configLocation"
+			value="classpath:com/gura/spring05/mybatis/Configuration.xml"/>
+	</beans:bean>
+	
+	<!-- 
+		(참조값 전달할때는 ref=, 숫자나 값을 직접 전달할때는 value=)
+		위의 설정을 java code로 환산하면
+		
+		sessionFactory=new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource);
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml");
+		
+	 -->
+	
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg name="sqlSessionFactory"  
+			ref="sessionFactory"/>
+	</beans:bean>
+	<!-- 
+		(constructor-arg는 생성자에 전달되는 인자를 뜻함)
+		위의 설정을 java code로 환산하면
+	
+		dataSource=new JndiObjetFactoryBean();
+		dataSource.setJndiName("java:comp/env/jdbc/myoracle");
+		
+		sessionFactory=new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource);
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml");
+		
+		new SqlSessionTemplate(sessionFactory); <<dao에서 필요한 핵심의존객체.		
+		
+	 -->
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.gura.spring05" />
+	
+	
+	
+</beans:beans>

@@ -3,12 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- 자주 사용하는 type 의 별칭 지정 -->
-	<typeAliases>
-		<typeAlias type="com.gura.spring05.member.dto.MemberDto" alias="MemberDto"/>
-	</typeAliases>
 	<!-- mapper 설정 -->
 	<mappers>
-		<mapper resource="com/gura/spring05/mybatis/MemberMapper.xml"/>
+		<mapper resource="com/gura/spring05/mybatis/TodoMapper.xml"/>
 	</mappers>
 </configuration>
