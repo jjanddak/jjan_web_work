@@ -48,7 +48,7 @@
 				<c:otherwise>
 					<p class="navbar-text pull-right">
 					<a class="navbar-link" 
-						href="${pageContext.request.contextPath }/users/private/info.do">
+						href="${pageContext.request.contextPath }/users/info.do">
 							<strong>${id }</strong></a>
 					<a class="navbar-link" 
 						href="${pageContext.request.contextPath }/users/logout.do">

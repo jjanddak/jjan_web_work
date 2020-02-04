@@ -1,9 +1,13 @@
 package com.gura.spring05.users.controller;
 
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.users.dto.UsersDto;
@@ -54,7 +59,7 @@ public class UsersController {
 	}
 	
 	//로그인폼 요청 처리
-	@RequestMapping("/users/loginform")
+	@RequestMapping("/users/login_form")
 	public String loginform(HttpServletRequest request) {
 		
 		// "url" 이라는 파라미터가 넘어오는지 읽어와 본다.  
@@ -85,11 +90,110 @@ public class UsersController {
 		request.setAttribute("savedId", savedId);
 		request.setAttribute("savedPwd", savedPwd);
 				
-		return "users/loginform";
+		return "users/login_form";
+	}
+	
+	//로그인 요청 처리
+	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
+	public ModelAndView login(@ModelAttribute UsersDto dto,
+			ModelAndView mView, 
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		String url=request.getParameter("url");
+		if(url==null) {
+			url=request.getContextPath()+"/home.do";
+		}
+		//목적지 정보를 미리 인코딩해놓는다
+		String encodedUrl=URLEncoder.encode(url);
+		
+		mView.addObject("url", url);  
+		mView.addObject("encodedUrl", encodedUrl);
+		//checkbox를 체크했는지 (체크안하면 null)
+		String isSave=request.getParameter("isSave");
+		//아이디를 쿠키로 저장
+		Cookie idCook=new Cookie("savedId",dto.getId());
+		Cookie pwdCook=new Cookie("savedPwd",dto.getPwd());
+		if(isSave!=null){
+			//테스트이므로 60초만 유지되도록.
+			idCook.setMaxAge(60*60*24);
+			pwdCook.setMaxAge(60*60*24);
+		}else{
+			//테스트이므로 60초만 유지되도록.
+			idCook.setMaxAge(0);
+			pwdCook.setMaxAge(0);
+		}
+		//응답객체(HttpServletResponse)를 이용해 쿠키도응답
+		response.addCookie(idCook);
+		response.addCookie(pwdCook);
+		
+		service.validUser(dto, request.getSession(), mView);
+		
+		mView.setViewName("users/login");
+		
+		return mView;
+	}
+	
+	//로그아웃처리
+	@RequestMapping("/users/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/home.do";
+	}
+	
+	//개인정보 보기 처리
+	@RequestMapping("/users/info")
+	public ModelAndView authInfo(HttpServletRequest request, 
+			ModelAndView mView) {
+		
+		//로그인된 아이디 읽어오기
+		String id=(String)request.getSession().getAttribute("id");
+		
+		//UsersService 객체를 이용, 개인정보를 ModelAndView 객체에 담는다
+		service.showInfo(id, mView);
+		
+		//view page 정보를 담고
+		mView.setViewName("users/info");
+		
+		return mView;
+	}
+	
+	/*
+	 * [ 파일 업로드 설정 ]
+	 * 
+	 * 1. pom.xml에 commons-fileupload, commons-io dependency 명시하기
+	 * 2. servlet-context.xml 에 CommonsMultipartResolver bean 설정
+	 * 3. MultipartFile 객체 활용
+	 * 4. upload 폴더 만들기
+	 * 
+	 */
+	
+	// ajax 파일 업로드 처리, JSON 문자열을 리턴해주어야한다
+	@ResponseBody
+	@RequestMapping(value="/users/profile_upload", method=RequestMethod.POST)
+	public Map<String, Object> profileUpload(HttpServletRequest request,
+			@RequestParam MultipartFile profileImage){
+		
+		String path=service.saveProfileImage(request, profileImage);
+		/*
+		 * {"savedPath":"/upload/xxxx.jpg"} 형식의 JSON 문자열을 리턴해주도록
+		 * Map 객체를 구성해서 리턴해준다.
+		 * 
+		 */
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("savedPath",  path);
+			
+		return map;
 	}
 	
 	
-	
+	//비밀번호 수정하기 폼 요청처리
+	@RequestMapping("/users/pwd_updateform")
+	public ModelAndView authPwdForm(HttpServletRequest request
+			, ModelAndView mView) {
+		mView.setViewName("users/pwd_updateform"); 
+		return mView;
+	}
 	
 	
 	

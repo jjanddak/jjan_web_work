@@ -13,4 +13,22 @@
 		VALUES (#{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
 	
+	<select id="getPwdHash" parameterType="String" resultType="String">
+		select pwd
+		from users
+		where id=#{inputId}
+	</select>
+	
+	<select id="getData" parameterType="String" resultType="usersDto">
+		SELECT id,email,regdate,profile
+		FROM users
+		where id=#{id}
+	</select>
+	
+	<update id="updateProfile" parameterType="usersDto">
+		UPDATE users
+		SET profile=#{profile}
+		WHERE id=#{id}
+	</update>
+	
 </mapper>
