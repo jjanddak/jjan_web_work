@@ -35,7 +35,7 @@
 			<td>
 				<a href="javascript:" id="profileLink">
 					<c:choose>
-						<c:when test="empty dto.profile">
+						<c:when test="${empty dto.profile}">
 							<img src="${pageContext.request.contextPath }/resources/images/bottle.png"/>
 						</c:when>
 						<c:otherwise>
@@ -52,6 +52,10 @@
 		<tr>
 			<th>가입일</th>
 			<td>${dto.regdate}</td>
+		</tr>
+		<tr>
+			<th>비밀번호 수정</th>
+			<td><a href="pwd_updateform.do">비밀번호 수정하기</a></td>
 		</tr>
 	</table>
 	<a href="updateform.do"><button class="btn btn-primary">개인정보 수정하기</button></a>
