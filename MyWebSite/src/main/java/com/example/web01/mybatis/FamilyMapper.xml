@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="family">
+	<select id="getList" resultType="com.example.web01.family.dto.FamilyDto">
+		SELECT num, name, phone
+		FROM family
+		ORDER BY num ASC
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM family where num=#{num}
+	</delete>
+	
+	<insert id="insert" parameterType="com.example.web01.family.dto.FamilyDto">
+		INSERT INTO family (num, name, phone) 
+		values (family_seq.nextval, #{name}, #{phone})
+	</insert>
+	
+	<select id="getData" parameterType="int" resultType="com.example.web01.family.dto.FamilyDto">
+		SELECT num,name,phone
+		FROM family
+		WHERE num=#{num}
+	</select>
+	
+	<update id="update" parameterType="com.example.web01.family.dto.FamilyDto">
+		UPDATE family
+		SET name=#{name}, phone=#{phone}
+		WHERE num=#{num}
+	</update>
+</mapper>
