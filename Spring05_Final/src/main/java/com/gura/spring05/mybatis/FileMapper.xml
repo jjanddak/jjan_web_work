@@ -18,8 +18,30 @@
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
+	<insert id="insert" parameterType="fileDto">
+		INSERT INTO board_file
+		(num, writer, title, orgFileName, saveFileName, fileSize, downCount, regdate)
+		VALUES(board_file_seq.nextval, #{writer}, #{title}, #{orgFileName},#{saveFileName},
+		#{fileSize}, #{downCount},sysdate)
+	</insert>
 	
+	<select id="getData" parameterType="int" resultType="fileDto">
+		SELECT num, writer, title, orgFileName, saeFileName, fileSize,
+			downCount, regdate
+		FROM board_file
+		WHERE num=#{num}
+	</select>
 	
+	<update id="addDownCount" parameterType="int">
+		UPDATE board_file
+		SET downCount=downCount+1
+		WHERE num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE board_file
+		WHERE num=#{num}
+	</delete>
 	
 	
 	
