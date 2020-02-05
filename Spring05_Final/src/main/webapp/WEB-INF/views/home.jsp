@@ -15,6 +15,7 @@
 	<h1>INDEX</h1>
 	<ul>
 		<li><a href="member/list.do">회원 목록(member table)</a></li>
+		<li><a href="file/list.do">자료실(board_file table)</a></li>
 	</ul>
 	<h2>공지사항</h2>
 	<ul>
