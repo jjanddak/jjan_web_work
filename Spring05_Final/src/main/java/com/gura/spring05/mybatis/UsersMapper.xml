@@ -43,6 +43,10 @@
 		WHERE id=#{id}
 	</update>	
 	
+	<delete id="delete" parameterType="String">
+		DELETE FROM users
+		where id=#{id}
+	</delete>
 	
 	
 	

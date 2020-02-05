@@ -28,7 +28,7 @@
 	<table class="table table-striped table-condensed">
 		<tr>
 			<th>아이디</th>
-			<td>${dto.id}</td>
+			<td>${id}</td>
 		</tr>
 		<tr>
 			<th>프로필 이미지</th>
@@ -92,7 +92,7 @@
 	});
 	
 	function deleteConfirm(){
-		var isDelete=confirm(${dto.id}+" 님 탈퇴하시겠습니까?");
+		var isDelete=confirm("${id} 님 탈퇴하시겠습니까?");
 		if(isDelete){
 			location.href="delete.do";
 		}

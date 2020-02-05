@@ -60,6 +60,11 @@ public class UsersDaoImpl implements UsersDao{
 		session.update("users.updateUser",dto);
 	}
 	
+	@Override
+	public void delete(String id) {
+		session.delete("users.delete", id);	
+	}
+	
 	
 	
 	

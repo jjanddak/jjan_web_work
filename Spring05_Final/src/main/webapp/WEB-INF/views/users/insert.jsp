@@ -12,7 +12,7 @@
 	<h1>Alert</h1>
 	<p>
 		<strong>${dto.id }</strong> 님 가입완료!
-		<a href="${pageContext.request.contextPath }/users/loginform.do">
+		<a href="${pageContext.request.contextPath }/users/login_form.do">
 			로그인하러가기!		
 		</a>
 	</p>

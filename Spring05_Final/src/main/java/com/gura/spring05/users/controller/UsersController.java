@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -248,6 +249,24 @@ public class UsersController {
 		return new ModelAndView("redirect:/users/info.do");
 	}
 	
+	@RequestMapping("/users/delete")
+	public ModelAndView authDelete(HttpServletRequest request,
+			ModelAndView mView) {
+		
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		//삭제반영
+		service.deleteUser(id);
+		
+		//로그아웃
+		session.invalidate();
+		
+		mView.addObject("id",id);
+		mView.setViewName("users/delete");
+		
+		return mView;
+	}
 	
 	
 	
