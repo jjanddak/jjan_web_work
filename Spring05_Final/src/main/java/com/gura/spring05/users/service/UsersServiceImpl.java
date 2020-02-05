@@ -123,8 +123,18 @@ public class UsersServiceImpl implements UsersService{
 		}
 	}
 	
+	@Override
+	public void updateUser(UsersDto dto) {
+		dao.updateUser(dto);
+	}
+	
+	
+	
+	
+	
 	
 }
+
 
 
 

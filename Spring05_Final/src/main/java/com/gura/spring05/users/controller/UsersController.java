@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -220,6 +221,35 @@ public class UsersController {
 		
 		return mView;
 	}
+
+	
+	//회원정보 수정폼 요청처리
+	@RequestMapping("/users/updateform")
+	public ModelAndView authUpdateform(HttpServletRequest request, 
+			ModelAndView mView) {
+		//세션영역의 아이디를 읽어와서
+		String id=(String)request.getSession().getAttribute("id");
+		
+		//ModelAndView 객체에 회원정보를 담고
+		service.showInfo(id, mView);
+		
+		//view page 설정 후
+		mView.setViewName("users/updateform");
+		
+		return mView; //리턴.
+    	}
+	
+	@RequestMapping(value="/users/update", method=RequestMethod.POST)
+	public ModelAndView authUpdate(@ModelAttribute UsersDto dto,
+			HttpServletRequest request) {
+		//서비스 이용 수정반영
+		service.updateUser(dto);
+		//개인정보 보기로 다시 리다이렉트.
+		return new ModelAndView("redirect:/users/info.do");
+	}
+	
+	
+	
 	
 }
 
