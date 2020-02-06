@@ -14,9 +14,9 @@ public class FileDaoImpl implements FileDao{
 	private SqlSession session;
 
 	@Override
-	public int getCount() {
-		//업로드된 파일의 전체 개수를 select 해서
-		int count=session.selectOne("file.getCount");
+	public int getCount(FileDto dto) {
+		//검색조건에 맞는 파일의 전체 개수를 select 해서
+		int count=session.selectOne("file.getCount", dto);
 		//리턴
 		return count;
 	}

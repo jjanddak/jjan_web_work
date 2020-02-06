@@ -1,6 +1,8 @@
 package com.gura.spring05.file.service;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,45 @@ public class FileServiceImpl implements FileService{
 	
 	@Override
 	public void list(HttpServletRequest request) {
+		/*
+		 * request 에 검색 keyword가 전달될수도 있고 안될수도 있다
+		 * 
+		 *  - 전달 안되는 경우 : navbar 에서 파일 목록보기를 누른경우
+		 *  - 전달되는 경우 : 하단에 검색허을ㄹ 입력하고 검색버튼을누른경우
+		 *  - 전달되는 경우2 : 이미 검색을 한 상태에서 하단 페이지 번호를 누른경우
+		 * 
+		 */
+		//검색과 관련된 파라미터를 읽어와 본다.
+		String keyword=request.getParameter("keyword");
+		String condition=request.getParameter("condition");
 		
+		//검색 키워드가 존재한다면 키워드를 담을 FileDto 객체 생성 
+		FileDto dto=new FileDto();
+		if(keyword != null) {//검색 키워드가 전달된 경우
+			if(condition.equals("titlename")) {//제목+파일명 검색
+				dto.setTitle(keyword);
+				dto.setOrgFileName(keyword);
+			}else if(condition.equals("title")) {//제목 검색
+				dto.setTitle(keyword);
+			}else if(condition.equals("writer")) {//작성자 검색
+				dto.setWriter(keyword);
+			}
+			/*
+			 *  검색 키워드에는 한글이 포함될 가능성이 있기 때문에
+			 *  링크에 그대로 출력가능하도록 하기 위해 미리 인코딩을 해서
+			 *  request 에 담아준다.
+			 */
+			String encodedKeyword=null;
+			try {
+				encodedKeyword=URLEncoder.encode(keyword, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			//키워드와 검색조건을 request 에 담는다. 
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("encodedKeyword", encodedKeyword);
+			request.setAttribute("condition", condition);
+		}			
 		//한 페이지에 나타낼 row 의 갯수
 		final int PAGE_ROW_COUNT=3;
 		//하단 디스플레이 페이지 갯수
@@ -40,7 +80,7 @@ public class FileServiceImpl implements FileService{
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
 		
 		//전체 row 의 갯수를 읽어온다.
-		int totalRow=dao.getCount();
+		int totalRow=dao.getCount(dto);
 		//전체 페이지의 갯수 구하기
 		int totalPageCount=
 				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
@@ -55,7 +95,6 @@ public class FileServiceImpl implements FileService{
 		}	
 
 		//cafedto 객체에 로우넘들 담는다.
-		FileDto dto=new FileDto();
 		dto.setStartRowNum(startRowNum);
 		dto.setEndRowNum(endRowNum);
 		
@@ -67,6 +106,8 @@ public class FileServiceImpl implements FileService{
 		request.setAttribute("endPageNum",endPageNum);
 		request.setAttribute("totalPageCount",totalPageCount);
 		request.setAttribute("list",list);
+		//전체 글의 개수도 담기
+		request.setAttribute("totalRow", totalRow);
 	}
 	
 	@Override

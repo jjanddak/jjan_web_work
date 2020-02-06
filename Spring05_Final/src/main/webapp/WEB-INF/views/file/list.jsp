@@ -15,6 +15,19 @@
 </jsp:include>
 <h1>파일목록</h1>
 <div class="container">
+	<c:choose>
+		<c:when test="${not empty keyword }">
+			<p>
+				<strong>${keyword }</strong> 키워드로 검색된
+				<strong>${totalRow }</strong> 개의 글이 검색되었습니다
+			</p>
+		</c:when>
+		<c:otherwise>
+			<p>
+				총 파일 수 : <strong>${totalRow }</strong>
+			</p>
+		</c:otherwise>
+	</c:choose>
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>			
@@ -57,7 +70,7 @@
 			<c:choose>
 				<c:when test="${startPageNum ne 1 }">
 					<li>
-						<a href="list.do?pageNum=${startPageNum-1}">&laquo;</a>
+						<a href="list.do?pageNum=${startPageNum-1}&condition=${condition}&keyword=${keyword}">&laquo;</a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -70,12 +83,12 @@
 				<c:choose>
 					<c:when test="${i eq pageNum }">
 						<li class="active">
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a>
 						</li>						
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -83,7 +96,7 @@
 			<c:choose>
 				<c:when test="${endPageNum lt totalPageCount }">
 					<li>
-						<a href="list.do?pageNum=${endPageNum+1}">&raquo;</a>
+						<a href="list.do?pageNum=${endPageNum+1}&condition=${condition}&keyword=${keyword}">&raquo;</a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -94,7 +107,20 @@
 			</c:choose>	
 		</ul>
 	</div>
-</div>
+	
+	<form action="list.do" method="get">
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="titlename" <c:if test="${condition eq 'titlename' }">selected</c:if>>제목+파일명</option>
+			<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
+			<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
+		</select>
+		<input type="text" name="keyword" id="keyword"
+		 	placeholder="검색어" value="${keyword }" />
+		 	<button type="submit">검색</button>
+	</form>
+	
+</div> <!-- .container -->
 <script>
 	function deleteConfirm(num){
 		var isDelete=confirm(num+" 번 파일을 삭제하시겠습니까?");
