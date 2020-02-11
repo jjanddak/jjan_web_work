@@ -14,8 +14,10 @@
 <div class="container">
 	<h1>INDEX</h1>
 	<ul>
+		<li><a href="cafe/list.do">게시판(board_cafe table)</a></li>
 		<li><a href="member/list.do">회원 목록(member table)</a></li>
 		<li><a href="file/list.do">자료실(board_file table)</a></li>
+		<li><a href="shop/list.do">Shop(shop table)</a></li>
 	</ul>
 	<h2>공지사항</h2>
 	<ul>

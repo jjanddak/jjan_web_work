@@ -4,10 +4,12 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<!-- 
 		아래의 MyBatis 관련 설정은 Servers/context.xml 문서에
@@ -71,6 +73,20 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
+	<!-- Transaction Manager 설정.................................... -->
+	<beans:bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+	<!-- 위 코드의 의미는 
+	txManager=new DataSourceTransactionManager();
+	txManager.setDataSource(dataSource);
+	 -->
+	
+	<!-- 어노테이션으로 트렌젝션 설정이 가능하도록 -->
+	<tx:annotation-driven transaction-manager="txManager"/><!-- 위 코드의 id와 똑같이 작성 -->
+	
+	
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -93,6 +109,17 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10240000"/>
 	</beans:bean>
+	
+	<!-- baen의 이름으로 view를 찾아갈 수 있도록 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<!-- 0 순위로 찾아가도록 하고 없으면 자동으로 views 폴더 안에서 jsp 페이지를 찾는다 -->
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	
+	<!-- web.xml 에서 설정된 error 관련된 요청 처리 -->
+	<view-controller path="/error/404.do" view-name="error/404"/>
+	<view-controller path="/error/500.do" view-name="error/500"/>
 	
 </beans:beans>
 

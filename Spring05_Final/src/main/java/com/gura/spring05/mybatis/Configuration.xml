@@ -8,11 +8,16 @@
 		<typeAlias type="com.gura.spring05.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.gura.spring05.users.dto.UsersDto" alias="usersDto"/>
 		<typeAlias type="com.gura.spring05.file.dto.FileDto" alias="fileDto"/>
+		<typeAlias type="com.gura.spring05.cafe.dto.CafeDto" alias="cafeDto"/>
+		<typeAlias type="com.gura.spring05.shop.dto.ShopDto" alias="shopDto"/>
+		<typeAlias type="com.gura.spring05.shop.dto.OrderDto" alias="orderDto"/>
 	</typeAliases>
 	<!-- mapper 설정 -->
 	<mappers>
 		<mapper resource="com/gura/spring05/mybatis/MemberMapper.xml"/>
 		<mapper resource="com/gura/spring05/mybatis/UsersMapper.xml"/>
 		<mapper resource="com/gura/spring05/mybatis/FileMapper.xml"/>
+		<mapper resource="com/gura/spring05/mybatis/CafeMapper.xml"/>
+		<mapper resource="com/gura/spring05/mybatis/ShopMapper.xml"/>
 	</mappers>
 </configuration>

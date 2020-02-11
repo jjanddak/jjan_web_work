@@ -51,4 +51,22 @@
 	</filter-mapping>	
 	
 	
+	<!-- 404, 500 에러페이지 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.do</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.do</location>
+	</error-page>
+	
+	
 </web-app>
+
+
+
+
+
+
